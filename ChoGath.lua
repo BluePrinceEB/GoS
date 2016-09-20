@@ -21,17 +21,7 @@ if GetObjectName(GetMyHero()) ~= "Chogath" then return end
 
 if not pcall( require, "OpenPredict" ) then PrintChat("This script doesn't work without OpenPredict! Download it!") return end	
 
-function AutoUpdate(data)
-    if tonumber(data) > tonumber(ver) then
-        PrintChat("New version found! " .. data)
-        PrintChat("Downloading update, please wait...")
-        DownloadFileAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/ChoGath.lua", SCRIPT_PATH .. "ChoGath.lua", function() PrintChat("Update Complete, please 2x F6!") return end)
-    else
-        PrintChat("Cho'Gath version " .. ver .. " Loaded!")
-    end
-end
-
-GetWebResultAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/ChoGath.version", AutoUpdate)
+PrintChat("Cho'Gath version " .. ver .. " Loaded!")
 
 --Menu
 ChoMenu = Menu("Cho", "Cho'Gath")
