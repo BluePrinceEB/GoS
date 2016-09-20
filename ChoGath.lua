@@ -21,6 +21,7 @@ if GetObjectName(GetMyHero()) ~= "Chogath" then return end
 
 if not pcall( require, "OpenPredict" ) then PrintChat("This script doesn't work without OpenPredict! Download it!") return end	
 
+local ver = "0.0.0.1"
 PrintChat("Cho'Gath version " .. ver .. " Loaded!")
 
 --Menu
@@ -80,7 +81,6 @@ ChoMenu.m.s:Boolean("sb", "Use Skin Changer")
 ChoMenu.m.s:Slider("cs", "Choose Skin", 0, 0, 10, 1)
 
 --Locals
-local ver = "0.0.0.1"
 local _skin = 0
 local RangeQ = 950
 local RangeW = 650
