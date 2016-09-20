@@ -21,8 +21,7 @@ if GetObjectName(GetMyHero()) ~= "Chogath" then return end
 
 if not pcall( require, "OpenPredict" ) then PrintChat("This script doesn't work without OpenPredict! Download it!") return end	
 
-local ver = "0.0.0.1"
-PrintChat("Cho'Gath version " .. ver .. " Loaded!")
+PrintChat("Cho'Gath Loaded!")
 
 --Menu
 ChoMenu = Menu("Cho", "Cho'Gath")
