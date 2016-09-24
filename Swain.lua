@@ -270,7 +270,7 @@ function skin()
 	--Main
 	if SWMenu.s.sb:Value() and SWMenu.s.cs:Value() ~= _skin then
 		HeroSkinChanger(GetMyHero(),SWMenu.s.cs:Value()) 
-		cSkin = SWMenu.s.cs:Value()
+		_skin = SWMenu.s.cs:Value()
 	end
 end
 
