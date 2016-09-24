@@ -102,14 +102,14 @@ end)
 
 OnDraw(function(myHero)
 	--Locals
-    local rdyQ = Ready(0)
+        local rdyQ = Ready(0)
 	local rdyW = Ready(1)
 	local rdyE = Ready(2)
 	local rdyR = Ready(3)
 
 	--Range
 	if not IsDead(myHero) then
-		if SWMenu.d.Q:Value() then DrawCircle(myHero, RangeQ, 1, 25, GoS.Green) end
+	    if SWMenu.d.Q:Value() then DrawCircle(myHero, RangeQ, 1, 25, GoS.Green) end
 	    if SWMenu.d.W:Value() then DrawCircle(myHero, RangeW, 1, 25, GoS.Blue) end
 	    if SWMenu.d.E:Value() then DrawCircle(myHero, RangeE, 1, 25, GoS.Red) end
 	    if SWMenu.d.R:Value() then DrawCircle(myHero, RangeR, 1, 25, GoS.Yellow) end
@@ -128,7 +128,7 @@ OnDraw(function(myHero)
 			if rdyE then
 				DmgDraw = DmgDraw + CalcDamage(myHero, unit, 0 ,CalcDmg(2,unit))
 			end	
-            if rdyR then
+                        if rdyR then
 				DmgDraw = DmgDraw + CalcDamage(myHero, unit, 0 ,CalcDmg(3,unit))
 			end
 			if DmgDraw > GetCurrentHP(unit) then
@@ -146,7 +146,7 @@ function OnCombo(target)
 	local rdyW = Ready(1)
 	local rdyE = Ready(2)
 
-    --Main
+        --Main
 	if IOW:Mode() == "Combo" then
 		--Q
 		if SWMenu.c.Q:Value() and rdyQ and ValidTarget(target, RangeQ) then
@@ -174,7 +174,6 @@ function OnHarass(target)
 	local rdyQ = Ready(0)
 	local rdyW = Ready(1)
 	local rdyE = Ready(2)
-	local GetPercentMana = (GetCurrentMana(myHero) / GetMaxMana(myHero)) * 100
 
     --Main
 	if IOW:Mode() == "Harass" then
@@ -182,7 +181,7 @@ function OnHarass(target)
 		if SWMenu.h.Q:Value() and rdyQ and ValidTarget(target, RangeQ) then
 			local QPred = GetCircularAOEPrediction(target, SwainQ)
 			if QPred and QPred.hitChance >= 0 then
-				if SWMenu.h.mana:Value() <= GetPercentMana then
+				if SWMenu.h.mana:Value() <= GetPercentMP(myHero) then
 					CastSkillShot(0, QPred.castPos)
 				end
 			end
@@ -191,14 +190,14 @@ function OnHarass(target)
 		if SWMenu.h.W:Value() and rdyW and ValidTarget(target, RangeQ) then
 			local WPred = GetCircularAOEPrediction(target, SwainW)
 			if WPred and WPred.hitChance >= 0.25 then
-				if SWMenu.h.mana:Value() <= GetPercentMana then
+				if SWMenu.h.mana:Value() <= GetPercentMP(myHero) then
 					CastSkillShot(1, WPred.castPos)
 				end
 			end
 		end
 		--E
 		if SWMenu.c.E:Value() and rdyE and ValidTarget(target, RangeE) then
-			if SWMenu.h.mana:Value() <= GetPercentMana then
+			if SWMenu.h.mana:Value() <= GetPercentMP(myHero) then
 				CastTargetSpell(target,2)
 			end
 		end
@@ -206,24 +205,21 @@ function OnHarass(target)
 end
 
 function OnClear()
-	--soon
+	--Soon
 end
 
 function KillSteal()
 	--Locals
 	local rdyQ = Ready(0)
 	local rdyE = Ready(2)
-	local GetPercentMana = (GetCurrentMana(myHero) / GetMaxMana(myHero)) * 100
 
-    --Main
+        --Main
 	for y,unit in pairs(GetEnemyHeroes()) do
 		--Q
 		if SWMenu.k.Q:Value() and rdyQ and ValidTarget(unit,RangeQ) and GetCurrentHP(unit) + GetDmgShield(unit) <  CalcDamage(myHero, unit, 0 ,CalcDmg(0,unit)) then
 			local QPred = GetCircularAOEPrediction(unit, SwainQ)
 			if QPred and QPred.hitChance >= 0 then
-				if SWMenu.h.mana:Value() <= GetPercentMana then
-					CastSkillShot(0, QPred.castPos)
-				end
+		            CastSkillShot(0, QPred.castPos)
 			end
 		end
 		--E
@@ -249,7 +245,7 @@ function Zhonya()
 end
 
 function AutoR(target)
-	--Locals
+    --Locals
     local rdyR = Ready(3)
 
     --Main
@@ -263,10 +259,9 @@ end
 function AutoE(target)
 	--Locals
 	local rdyE = Ready(2)
-	local GetPercentMana = (GetCurrentMana(myHero) / GetMaxMana(myHero)) * 100
 
-    --main
-	if SWMenu.h.AE:Value() and SWMenu.h.AES:Value() <= GetPercentMana and rdyE and IsInDistance(target,RangeE) then 
+        --Main
+	if SWMenu.h.AE:Value() and SWMenu.h.AES:Value() <= GetPercentMP(myHero) and rdyE and ValidTarget(target, RangeE) then 
 		CastTargetSpell(target,2)
 	end
 end
