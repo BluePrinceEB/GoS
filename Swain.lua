@@ -6,7 +6,7 @@
 ╔═╝║╚╝╚╝║║║╠╝╚╣║─║║
 ╚══╩═╝╚═╩╝╚╩══╩╝─╚╝
 LoL Patch : 6.19
-Script Verison : 0.01
+Script Verison : 0.02
 by Shulepin
 _____________________
 
@@ -76,7 +76,7 @@ local SwainW = { delay = 1.100, speed = math.huge, range = 900, radius = 180 }
 local item = {3157}
 
 --Locals
-local ver = "0.01"
+local ver = "0.02"
 local LoL = "6.19"
 local RangeQ = 700
 local RangeW = 900
