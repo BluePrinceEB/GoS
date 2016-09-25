@@ -25,7 +25,7 @@ function AutoUpdate(data)
     if tonumber(data) > tonumber(ver) then
         print("<font color=\"#FE2EC8\"><b>[Swain]: </b></font><font color=\"#FFFFFF\"> New version found!</font>")
         print("<font color=\"#FE2EC8\"><b>[Swain]: </b></font><font color=\"#FFFFFF\"> Downloading update, please wait...</font>")
-        DownloadFileAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/Swain.lua", SCRIPT_PATH .. "Swain.lua", function() print("<font color=\"#FF1493\"><b>[Lucian OnS]:</b></font><font color=\"#FFFFFF\"> Update Complete, please 2x F6!</font>") return end)
+        DownloadFileAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/Swain.lua", SCRIPT_PATH .. "Swain.lua", function() print("<font color=\"#FE2EC8\"><b>[Swain]: </b></font><font color=\"#FFFFFF\"> Update Complete, please 2x F6!</font>") return end)
     else
        print("<font color=\"#FE2EC8\"><b>[Swain]: </b></font><font color=\"#FFFFFF\"> No Updates Found!</font>")
     end
