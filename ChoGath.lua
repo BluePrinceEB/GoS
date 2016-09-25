@@ -5,8 +5,8 @@
 ║║─║╔╗║║║║║╚╗║╔╗║─║║─║╔╗║
 ║╚═╣║║║╚╝║╚═╝║║║║─║║─║║║║
 ╚══╩╝╚╩══╩═══╩╝╚╝─╚╝─╚╝╚╝ 
-LoL Patch : 6.18+
-Script Verison : 0.0.0.1
+LoL Patch : 6.19
+Script Verison : 0.01
 By Shulepin
 _________________________
 
@@ -15,80 +15,99 @@ Credits:
 -Zwei(http://gamingonsteroids.com/user/13058-zwei/)
 -Noddy(http://gamingonsteroids.com/user/304-noddy/)
 -Icesythe7(http://gamingonsteroids.com/user/5317-icesythe7/)
+-jouzuna(http://gamingonsteroids.com/user/171-jouzuna/)
 ]]--
 
+--Auto Update
+local ver = "0.01"
+
+function AutoUpdate(data)
+    if tonumber(data) > tonumber(ver) then
+        print("<font color=\"#FE2EC8\"><b>[Cho'Gath]: </b></font><font color=\"#FFFFFF\"> New version found!</font>")
+        print("<font color=\"#FE2EC8\"><b>[Cho'Gath]: </b></font><font color=\"#FFFFFF\"> Downloading update, please wait...</font>")
+        DownloadFileAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/ChoGath.lua", SCRIPT_PATH .. "ChoGath.lua", function() print("<font color=\"#FE2EC8\"><b>[Cho'Gath]: </b></font><font color=\"#FFFFFF\"> Update Complete, please 2x F6!</font>") return end)
+    else
+       print("<font color=\"#FE2EC8\"><b>[Cho'Gath]: </b></font><font color=\"#FFFFFF\"> No Updates Found!</font>")
+    end
+end
+
+--Hero
 if GetObjectName(GetMyHero()) ~= "Chogath" then return end
 
-if not pcall( require, "OpenPredict" ) then PrintChat("This script doesn't work without OpenPredict! Download it!") return end	
+--Load Libs
+require('OpenPredict')
+require('MixLib')
 
---Menu
+--Main Menu
 ChoMenu = Menu("Cho", "Cho'Gath")
+
+--Combo Menu
 ChoMenu:SubMenu("c", "Combo")
-ChoMenu.c:Info("c1", "-[Combo]-")
 ChoMenu.c:Boolean("Q", "Use Q", true)
 ChoMenu.c:Boolean("W", "Use W", true)
 
+--Ultimate Menu
 ChoMenu:SubMenu("u", "Ultimate")
-ChoMenu.u:Info("u1", "-[Ultimate]-")
 ChoMenu.u:Boolean("R", "Use R", true)
 
+--Harass Menu
 ChoMenu:SubMenu("h", "Harass")
-ChoMenu.h:Info("h1", "-[Harass]-")
 ChoMenu.h:Boolean("Q", "Use Q", true)
 ChoMenu.h:Boolean("W", "Use W")
-ChoMenu.h:Info("h2", "-[Mana Manager]-")
 ChoMenu.h:Slider("mana", "Min. Mana(%) To Harass",60,0,100,1)
 
+--Clear Menu
 ChoMenu:SubMenu("l", "Clear")
-ChoMenu.l:Info("l1", "-[Clear]-")
 ChoMenu.l:Boolean("Q", "Use Q", true)
 ChoMenu.l:Boolean("W", "Use W", true)
-ChoMenu.l:Info("l2", "-[Mana Manager]-")
 ChoMenu.l:Slider("mana", "Min. Mana(%) To Clear",65,0,100,1)
-ChoMenu.l:Info("l3", "-[Misc]-")
 ChoMenu.l:Slider("limQ", "Use Q if Minions Around >= X",3,1,10,1)
 ChoMenu.l:Slider("limW", "Use W if Minions Around >= X",2,1,10,1)
 
+--KS
 ChoMenu:SubMenu("k", "Kill Steal")
-ChoMenu.k:Info("k1", "-[KS]-")
 ChoMenu.k:Boolean("Q", "Use Q", true)
 ChoMenu.k:Boolean("W", "Use W", true)
 
+--Pred Menu
 ChoMenu:SubMenu("p", "Prediction")
-ChoMenu.p:Info("p1", "-[Hit Chance]-")
 ChoMenu.p:Slider("Qh", "HitChance Q", 50, 0, 100, 1)
 ChoMenu.p:Slider("Wh", "HitChance W", 50, 0, 100, 1)
 
+--Draw Menu
 ChoMenu:SubMenu("dr", "Draw")
-ChoMenu.dr:Info("i1", "-[Damage]-")
 ChoMenu.dr:Boolean("DrDmg", "Draw Damage", true)
 ChoMenu.dr:Boolean("DrDmgQ", "Draw Q Damage", true)
 ChoMenu.dr:Boolean("DrDmgW", "Draw W Damage", true)
 ChoMenu.dr:Boolean("DrDmgR", "Draw R Damage", true)
-ChoMenu.dr:Info("i3", "-[Killable Text]-")
 ChoMenu.dr:Boolean("KillRtext", "Draw text", true)
-ChoMenu.dr:Info("i2", "-[Spells Range]-")
 ChoMenu.dr:Boolean("DrRanQ", "Draw Q Range", true)
 ChoMenu.dr:Boolean("DrRanW", "Draw W Range", true)
 ChoMenu.dr:Boolean("DrRanR", "Draw R Range")
 
+--Misc Menu
 ChoMenu:SubMenu("m", "Misc")
 ChoMenu.m:SubMenu("s", "Skin Changer")
 ChoMenu.m.s:Boolean("sb", "Use Skin Changer")
 ChoMenu.m.s:Slider("cs", "Choose Skin", 0, 0, 10, 1)
 
 --Locals
+local LoL = "6.19"
 local _skin = 0
 local RangeQ = 950
 local RangeW = 650
 local RangeR = 250
+
+--Tables
 local ChoQ = { delay = 1.200, speed = math.huge , width = 100, range = RangeQ }
 local ChoW = { delay = 0.250, speed = math.huge, range = RangeW, angle = 60}
 
 --Start
 OnTick(function(myHero)
 	if not IsDead(myHero) then
+		--Locals
 		local target = GetCurrentTarget()
+		--Functions
 		OnCombo(target)
 		OnHarass(target)
 		OnClear()
@@ -99,7 +118,7 @@ OnTick(function(myHero)
 end)
 
 OnDraw(function(myHero)
-
+    --Locals
 	local qRdy = Ready(0)
 	local wRdy = Ready(1)
 	local eRdy = Ready(2)
@@ -138,12 +157,15 @@ OnDraw(function(myHero)
 	end	
 end)
 
+--Functions
 function OnCombo(target)
+	--Locals
 	local qRdy = Ready(0)
 	local wRdy = Ready(1)
 	local eRdy = Ready(2)
 	local rRdy = Ready(3)
 
+	--Main
 	if IOW:Mode() == "Combo" then
 		--Q
 		if ChoMenu.c.Q:Value() and qRdy and ValidTarget(target, RangeQ) then
@@ -163,16 +185,17 @@ function OnCombo(target)
 end
 
 function OnHarass(target)
+	--Locals
 	local qRdy = Ready(0)
 	local wRdy = Ready(1)
-	local GetPercentMana = (GetCurrentMana(myHero) / GetMaxMana(myHero)) * 100
 
+	--Main
 	if IOW:Mode() == "Harass" then
 		--Q
 		if ChoMenu.h.Q:Value() and qRdy and ValidTarget(target, RangeQ) then
 			local QPred = GetCircularAOEPrediction(target, ChoQ)
 			if QPred and QPred.hitChance >= (ChoMenu.p.Qh:Value()/100) then
-				if ChoMenu.h.mana:Value() <= GetPercentMana then
+				if ChoMenu.h.mana:Value() <= GetPercentMP(myHero) then
 					CastSkillShot(0, QPred.castPos)
 				end
 			end
@@ -181,7 +204,7 @@ function OnHarass(target)
 		if ChoMenu.h.W:Value() and wRdy and ValidTarget(target, RangeW) then
 			local WPred = GetConicAOEPrediction(target, ChoW)
 			if WPred and WPred.hitChance >= (ChoMenu.p.Wh:Value()/100) then
-				if ChoMenu.h.mana:Value() <= GetPercentMana then
+				if ChoMenu.h.mana:Value() <= GetPercentMP(myHero) then
 					CastSkillShot(1, WPred.castPos)
 				end
 			end
@@ -190,24 +213,25 @@ function OnHarass(target)
 end
 
 function OnClear(target)
+	--Locals
 	local qRdy = Ready(0)
 	local wRdy = Ready(1)
-	local GetPercentMana = (GetCurrentMana(myHero) / GetMaxMana(myHero)) * 100
 
+	--Main
 	if IOW:Mode() == "LaneClear" then
 		for x, minion in pairs(minionManager.objects) do
 			if GetTeam(minion) ~= MINION_ALLY then
 		    --Q
 			local QPred = GetCircularAOEPrediction(minion, ChoQ)
 			if ChoMenu.l.Q:Value() and qRdy and ValidTarget(minion, RangeQ) and MinionsAround(minion, 950) >= ChoMenu.l.limQ:Value() then
-				if ChoMenu.l.mana:Value() <= GetPercentMana then
+				if ChoMenu.l.mana:Value() <= GetPercentMP(myHero) then
 					CastSkillShot(0, QPred.castPos)
 				end
 			end
 			--W
 			local WPred = GetConicAOEPrediction(minion, ChoW)
 			if ChoMenu.l.W:Value() and wRdy and ValidTarget(minion, RangeW) and MinionsAround(minion, 650) >= ChoMenu.l.limW:Value() then
-				if ChoMenu.l.mana:Value() <= GetPercentMana then
+				if ChoMenu.l.mana:Value() <= GetPercentMP(myHero) then
 					CastSkillShot(1, WPred.castPos)
 				end
 			end
@@ -217,9 +241,11 @@ function OnClear(target)
 end
 
 function OnKillSteal()
+	--Locals
 	local qRdy = Ready(0)
 	local wRdy = Ready(1)
 
+	--Main
 	for t,unit in pairs(GetEnemyHeroes()) do
 		--Q
 		if ChoMenu.k.Q:Value() and qRdy and ValidTarget(unit,RangeQ) and GetCurrentHP(unit) + GetDmgShield(unit) <  CalcDamage(myHero, unit, 0 ,CalcDmg(0,unit)) then
@@ -259,6 +285,8 @@ end
 function skin()
 	if ChoMenu.m.s.sb:Value() and ChoMenu.m.s.cs:Value() ~= _skin then
 		HeroSkinChanger(GetMyHero(),ChoMenu.m.s.cs:Value()) 
-		cSkin = ChoMenu.m.s.cs:Value()
+		_skin = ChoMenu.m.s.cs:Value()
 	end
 end
+
+print("<font color=\"#FE2EC8\"><b>[Cho'Gath]: Loaded</b></font> || Version: "..ver," ", "|| LoL Patch : "..LoL)
