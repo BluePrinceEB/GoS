@@ -18,6 +18,21 @@ Credits:
 -jouzuna(http://gamingonsteroids.com/user/171-jouzuna/)
 ]]--
 
+--Auto Update
+local ver = "0.02"
+
+function AutoUpdate(data)
+    if tonumber(data) > tonumber(ver) then
+        print("<font color=\"#FE2EC8\"><b>[Swain]: </b></font><font color=\"#FFFFFF\"> New version found!</font>")
+        print("<font color=\"#FE2EC8\"><b>[Swain]: </b></font><font color=\"#FFFFFF\"> Downloading update, please wait...</font>")
+        DownloadFileAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/Swain.lua", SCRIPT_PATH .. "Swain.lua", function() print("<font color=\"#FF1493\"><b>[Lucian OnS]:</b></font><font color=\"#FFFFFF\"> Update Complete, please 2x F6!</font>") return end)
+    else
+       print("<font color=\"#FE2EC8\"><b>[Swain]: </b></font><font color=\"#FFFFFF\"> No Updates Found!</font>")
+    end
+end
+
+GetWebResultAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/Swain.version", AutoUpdate)
+
 --Hero
 if GetObjectName(GetMyHero()) ~= "Swain" then return end
 
@@ -76,7 +91,6 @@ local SwainW = { delay = 1.100, speed = math.huge, range = 900, radius = 180 }
 local item = {3157}
 
 --Locals
-local ver = "0.02"
 local LoL = "6.19"
 local RangeQ = 700
 local RangeW = 900
@@ -303,4 +317,4 @@ OnRemoveBuff (function(unit, buff)
     end
 end)
 
-print("<font color=\"#FE2EC8\"><b>Swain Loaded</b></font> || Version: "..ver," ", "|| LoL Patch : "..LoL)
+print("<font color=\"#FE2EC8\"><b>[Swain]: Loaded</b></font> || Version: "..ver," ", "|| LoL Patch : "..LoL)
