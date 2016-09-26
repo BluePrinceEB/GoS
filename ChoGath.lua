@@ -19,7 +19,7 @@ Credits:
 ]]--
 
 --Auto Update
-local ver = "0.01"
+local ver = "0.02"
 
 function AutoUpdate(data)
     if tonumber(data) > tonumber(ver) then
@@ -168,7 +168,7 @@ function OnCombo(target)
 	local rRdy = Ready(3)
 
 	--Main
-	if IOW:Mode() == "Combo" then
+	if Mix:Mode() == "Combo" then
 		--Q
 		if ChoMenu.c.Q:Value() and qRdy and ValidTarget(target, RangeQ) then
 			local QPred = GetCircularAOEPrediction(target, ChoQ)
@@ -192,7 +192,7 @@ function OnHarass(target)
 	local wRdy = Ready(1)
 
 	--Main
-	if IOW:Mode() == "Harass" then
+	if Mix:Mode() == "Harass" then
 		--Q
 		if ChoMenu.h.Q:Value() and qRdy and ValidTarget(target, RangeQ) then
 			local QPred = GetCircularAOEPrediction(target, ChoQ)
@@ -220,7 +220,7 @@ function OnClear(target)
 	local wRdy = Ready(1)
 
 	--Main
-	if IOW:Mode() == "LaneClear" then
+	if Mix:Mode() == "LaneClear" then
 		for x, minion in pairs(minionManager.objects) do
 			if GetTeam(minion) ~= MINION_ALLY then
 		    --Q
