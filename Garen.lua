@@ -26,18 +26,17 @@ require ("DamageLib")
 --Auto Update
 local ver = "0.01"
 
---[[
 function AutoUpdate(data)
     if tonumber(data) > tonumber(ver) then
         print("<font color=\"#FE2EC8\"><b>[Garen]: </b></font><font color=\"#FFFFFF\"> New version found!</font>")
         print("<font color=\"#FE2EC8\"><b>[Garen]: </b></font><font color=\"#FFFFFF\"> Downloading update, please wait...</font>")
-        DownloadFileAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/Swain.lua", SCRIPT_PATH .. "Swain.lua", function() print("<font color=\"#FF1493\"><b>[Garen]:</b></font><font color=\"#FFFFFF\"> Update Complete, please 2x F6!</font>") return end)
+        DownloadFileAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/Garen.lua", SCRIPT_PATH .. "Garen.lua", function() print("<font color=\"#FF1493\"><b>[Garen]:</b></font><font color=\"#FFFFFF\"> Update Complete, please 2x F6!</font>") return end)
     else
        print("<font color=\"#FE2EC8\"><b>[Garen]: </b></font><font color=\"#FFFFFF\"> No Updates Found!</font>")
     end
 end
 
-GetWebResultAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/Swain.version", AutoUpdate)]]--
+GetWebResultAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/Garen.version", AutoUpdate)
 
 --Main Menu
 GMenu = Menu("G", "Garen")
