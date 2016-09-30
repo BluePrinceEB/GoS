@@ -32,7 +32,7 @@ function AutoUpdate(data)
         print("<font color=\"#0099FF\"><b>[Garen]: </b></font><font color=\"#FFFFFF\"> Downloading update, please wait...</font>")
         DownloadFileAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/Garen.lua", SCRIPT_PATH .. "Garen.lua", function() print("<font color=\"#0099FF\"><b>[Garen]:</b></font><font color=\"#FFFFFF\"> Update Complete, please 2x F6!</font>") return end)
     else
-       print("<font color=\"#0099FF\"><b>[Garen]: </b></font><font color=\"#FFFFFF\"> No Updates Found!</font>")
+       print("<font color=\"#0099FF\"><b>[Garen1]: </b></font><font color=\"#FFFFFF\">No Updates found")
     end
 end
 
