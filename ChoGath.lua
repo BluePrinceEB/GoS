@@ -19,7 +19,8 @@ Credits:
 ]]--
 
 --Auto Update
-local ver = "0.02"
+local ver = "0.03"
+local DmgHPBar = { }
 
 function AutoUpdate(data)
     if tonumber(data) > tonumber(ver) then
@@ -39,6 +40,7 @@ if GetObjectName(GetMyHero()) ~= "Chogath" then return end
 --Load Libs
 require('OpenPredict')
 require('MixLib')
+require('ChallengerCommon')
 
 --Main Menu
 ChoMenu = Menu("Cho", "Cho'Gath")
@@ -70,18 +72,34 @@ ChoMenu.l:Slider("limW", "Use W if Minions Around >= X",2,1,10,1)
 ChoMenu:SubMenu("k", "Kill Steal")
 ChoMenu.k:Boolean("Q", "Use Q", true)
 ChoMenu.k:Boolean("W", "Use W", true)
+ChoMenu.k:Boolean("I", "Use Ignite", true)
 
 --Pred Menu
 ChoMenu:SubMenu("p", "Prediction")
 ChoMenu.p:Slider("Qh", "HitChance Q", 50, 0, 100, 1)
 ChoMenu.p:Slider("Wh", "HitChance W", 50, 0, 100, 1)
 
+--AGC
+ChoMenu:SubMenu("AGC", "Anti-GapCloser")
+ChoMenu.AGC:Boolean("Q", "Use Q", true)
+ChoMenu.AGC:Boolean("W", "Use W", true)
+
+--Interr
+ChoMenu:SubMenu("Interrupter", "Interrupter")
+ChoMenu.Interrupter:Boolean("Q", "Use Q", true)
+ChoMenu.Interrupter:Boolean("W", "Use W", true)
+
 --Draw Menu
 ChoMenu:SubMenu("dr", "Draw")
-ChoMenu.dr:Boolean("DrDmg", "Draw Damage", true)
-ChoMenu.dr:Boolean("DrDmgQ", "Draw Q Damage", true)
-ChoMenu.dr:Boolean("DrDmgW", "Draw W Damage", true)
-ChoMenu.dr:Boolean("DrDmgR", "Draw R Damage", true)
+OnLoad(function()
+	for i, enemy in pairs(GetEnemyHeroes()) do
+		ChoMenu.dr:SubMenu("HPBar_"..enemy.charName, "Draw DmgHPBar On "..enemy.charName)
+		DmgHPBar[i] = DrawDmgHPBar(ChoMenu.dr["HPBar_"..enemy.charName], {ARGB(200, 89, 0 ,179), ARGB(200, 0, 245, 255), ARGB(200, 186, 85, 211)}, {"R", "Q", "W"})
+	end
+
+	Interrupter()
+	AntiGapCloser()
+end)
 ChoMenu.dr:Boolean("KillRtext", "Draw text", true)
 ChoMenu.dr:Boolean("DrRanQ", "Draw Q Range", true)
 ChoMenu.dr:Boolean("DrRanW", "Draw W Range", true)
@@ -99,6 +117,7 @@ local _skin = 0
 local RangeQ = 950
 local RangeW = 650
 local RangeR = 250
+local Ignite = (GetCastName(GetMyHero(),SUMMONER_1):lower():find("summonerdot") and SUMMONER_1 or (GetCastName(GetMyHero(),SUMMONER_2):lower():find("summonerdot") and SUMMONER_2 or nil))
 
 --Tables
 local ChoQ = { delay = 1.200, speed = math.huge , width = 100, range = RangeQ }
@@ -116,6 +135,7 @@ OnTick(function(myHero)
 		OnKillSteal()
 		CastR()
 		skin()
+		UpdateDmgHPBar()
 	end
 end)
 
@@ -128,7 +148,7 @@ OnDraw(function(myHero)
 
 	--Text
 	for x,unit in pairs(GetEnemyHeroes()) do 
-		if ChoMenu.dr.KillRtext:Value() and rRdy and ValidTarget(unit,1500) and GetCurrentHP(unit) + GetDmgShield(unit) <  CalcDmg(3,unit) then
+		if WorldToScreen(0,unit.pos).flag and ChoMenu.dr.KillRtext:Value() and rRdy and ValidTarget(unit,1500) and GetCurrentHP(unit) + GetDmgShield(unit) <  CalcDmg(3,unit) then
 			DrawText(unit.charName.." R Killable", 20, GetHPBarPos(unit).x, GetHPBarPos(unit).y+150, GoS.Red)
 		end
 	end
@@ -139,22 +159,9 @@ OnDraw(function(myHero)
 	if ChoMenu.dr.DrRanR:Value() then DrawCircle(myHero, RangeR, 1, 25, GoS.Red) end
 
     --Damage
-	for q,unit in pairs(GetEnemyHeroes()) do
-		if ValidTarget(unit,2000) and ChoMenu.dr.DrDmg:Value() then
-			local DmgDraw=0
-			if qRdy and ChoMenu.dr.DrDmgQ:Value() then
-				DmgDraw = DmgDraw + CalcDamage(myHero, unit, 0 ,CalcDmg(0,unit))
-			end	
-			if wRdy and ChoMenu.dr.DrDmgW:Value() then
-				DmgDraw = DmgDraw + CalcDamage(myHero, unit, 0 ,CalcDmg(1,unit))
-			end	
-			if rRdy and ChoMenu.dr.DrDmgR:Value() then
-				DmgDraw = DmgDraw + CalcDmg(3,unit)
-			end	
-			if DmgDraw > GetCurrentHP(unit) then
-				DmgDraw = GetCurrentHP(unit)
-			end
-			DrawDmgOverHpBar(unit,GetCurrentHP(unit),0,DmgDraw,ARGB(255,255,255,0))
+	for i, enemy in pairs(GetEnemyHeroes()) do
+		if ValidTarget(enemy, 2000) and DmgHPBar[i] then
+			DmgHPBar[i]:Draw()
 		end
 	end	
 end)
@@ -263,6 +270,11 @@ function OnKillSteal()
 				CastSkillShot(1, WPred.castPos)
 			end
 		end
+
+		--Ignite
+		if ChoMenu.k.I:Value() and Ready(Ignite) and ValidTarget(unit, 660) and GetCurrentHP(unit) + GetDmgShield(unit) <  CalcDmg(Ignite,unit) then
+			CastTargetSpell(unit, Ignite)
+		end
 	end
 end
 
@@ -279,7 +291,8 @@ function CalcDmg(spell, target)
 	local dmg={
 	[0] = 25 + 55*GetCastLevel(myHero,0) + GetBonusAP(myHero),
 	[1] = 25 + 50*GetCastLevel(myHero,1) + GetBonusAP(myHero)*0.7,
-	[3] = 125 + 175*GetCastLevel(myHero,3) + GetBonusAP(myHero)*0.7
+	[3] = 125 + 175*GetCastLevel(myHero,3) + GetBonusAP(myHero)*0.7,
+	[Ignite] = 70 + 20*GetLevel(myHero)
 }
 return dmg[spell]
 end
@@ -289,6 +302,57 @@ function skin()
 		HeroSkinChanger(GetMyHero(),ChoMenu.m.s.cs:Value()) 
 		_skin = ChoMenu.m.s.cs:Value()
 	end
+end
+
+function UpdateDmgHPBar()
+	for i, enemy in pairs(GetEnemyHeroes()) do
+		if ValidTarget(enemy, 2000) and DmgHPBar[i] then
+			DmgHPBar[i]:SetValue(1, enemy, CalcDmg(3, enemy), IsReady(_R))
+			DmgHPBar[i]:SetValue(2, enemy, CalcDmg(0, enemy), IsReady(_Q))
+			DmgHPBar[i]:SetValue(3, enemy, CalcDmg(1, enemy), IsReady(_W))
+			DmgHPBar[i]:CheckValue()
+		end
+	end
+end
+
+function Interrupter()
+	ChallengerCommon.Interrupter(ChoMenu.Interrupter, function(unit, spell)
+		--Q
+		if ChoMenu.Interrupter.Q:Value() and unit.team == MINION_ENEMY and Ready(0) and GetDistance(myHero, unit) <= 950 and unit.valid then
+			local QPred = GetCircularAOEPrediction(unit, ChoQ)
+			if QPred and QPred.hitChance >= 0.10 then
+				CastSkillShot(0, QPred.castPos)
+			end
+		end
+
+		--W
+		if ChoMenu.Interrupter.W:Value() and unit.team == MINION_ENEMY and Ready(1) and GetDistance(myHero, unit) <= 650 and unit.valid then
+			local WPred = GetConicAOEPrediction(unit, ChoW)
+			if WPred and WPred.hitChance >= 0 then
+				CastSkillShot(1, WPred.castPos)
+			end
+		end
+	end)
+end
+
+function AntiGapCloser()
+	ChallengerCommon.AntiGapcloser(ChoMenu.AGC, function(unit, spell)
+		--Q
+		if ChoMenu.AGC.Q:Value() and unit.team == MINION_ENEMY and Ready(0) and GetDistance(myHero, unit) <= 950 and unit.valid then
+			local QPred = GetCircularAOEPrediction(unit, ChoQ)
+			if QPred and QPred.hitChance >= 0.10 then
+				CastSkillShot(0, QPred.castPos)
+			end
+		end
+
+		--W
+		if ChoMenu.AGC.W:Value() and unit.team == MINION_ENEMY and Ready(1) and GetDistance(myHero, unit) <= 650 and unit.valid then
+			local WPred = GetConicAOEPrediction(unit, ChoW)
+			if WPred and WPred.hitChance >= 0 then
+				CastSkillShot(1, WPred.castPos)
+			end
+		end
+	end)
 end
 
 print("<font color=\"#FE2EC8\"><b>[Cho'Gath]: Loaded</b></font> || Version: "..ver," ", "|| LoL Patch : "..LoL)
