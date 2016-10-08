@@ -1,3 +1,6 @@
+--Hero
+if GetObjectName(GetMyHero()) ~= "Chogath" then return end
+
 --[[
 ╔══╦╗╔╦══╦═══╦══╦════╦╗╔╗  
 ║╔═╣║║║╔╗║╔══╣╔╗╠═╗╔═╣║║║    
@@ -33,9 +36,6 @@ function AutoUpdate(data)
 end
 
 GetWebResultAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/ChoGath.version", AutoUpdate)
-
---Hero
-if GetObjectName(GetMyHero()) ~= "Chogath" then return end
 
 --Load Libs
 require('OpenPredict')
