@@ -389,3 +389,4 @@ function Gnar_Activator(target)
 		end
 	end
 end
+--
