@@ -35,9 +35,7 @@ function Gnar()
 
 	QCast, WCast, ECast, RCast = 0, 0, 0, 0
 	WBuff = {}
-	summonerNameOne = myHero:GetSpellData(SUMMONER_1).name 
-        summonerNameTwo = myHero:GetSpellData(SUMMONER_2).name
-	Ignite = (summonerNameOne:lower():find("summonerdot") and SUMMONER_1 or (summonerNameTwo:lower():find("summonerdot") and SUMMONER_2 or nil))
+	Ignite = Mix:GetSlotByName("summonerdot", 4, 5)
 	for _,i in pairs(GetEnemyHeroes()) do
 		WBuff[GetObjectName(i)] = 0
 	end
@@ -261,7 +259,7 @@ end
 
 function Gnar_Flee()
 	if Config.Key.FK:Value() then
-	    MoveToXYZ(GetMousePos())
+	    Mix:Move()
 	    for _, minion in pairs(minionManager.objects) do
 		    if myHero:GetSpellData(_E).name:lower() == "gnare" and minion.valid and minion ~= nil then if GetDistanceSqr(minion, GetMousePos()) <= Gnar_Vars.WM.range * Gnar_Vars.WM.range and GetDistanceSqr(minion, myHero) <= Gnar_Vars.ET.range * Gnar_Vars.ET.range then
 			    if Config.F.E:Value() then CastSkillShot(_E, minion.x, myHero.y, minion.z) end
