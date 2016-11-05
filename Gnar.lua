@@ -7,10 +7,10 @@ require('ChallengerCommon')
 require('MapPositionGOS') 
 
 local LoLVer = "6.21.0.0"
-local ScrVer = "1"
+local ScrVer = 1
 
-function AutoUpdate(data)
-    if tonumber(data) > tonumber(ScrVer) then
+local function Gnar_Update(data)
+    if tonumber(data) > ScrVer then
         PrintChat("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#FFA500\"><b>[Gnar]</b></font><font color=\"#E8E8E8\"> New version found!</font> " .. data)
         PrintChat("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#FFA500\"><b>[Gnar]</b></font><font color=\"#E8E8E8\"> Downloading update, please wait...</font>")
         DownloadFileAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/Gnar.lua", SCRIPT_PATH .. "Gnar.lua", function() PrintChat("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#FFA500\"><b>[Gnar]</b></font><font color=\"#E8E8E8\"> Update Complete, please 2x F6!</font>") return end)  
@@ -19,7 +19,7 @@ function AutoUpdate(data)
     end
 end
 
-GetWebResultAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/Gnar.version", AutoUpdate)
+GetWebResultAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/Gnar.version", Gnar_Update)
 
 local Skin = {["Gnar"] = {"Classic", "Dino", "Gentleman", "Snow Day", "El Leon"}}
 
