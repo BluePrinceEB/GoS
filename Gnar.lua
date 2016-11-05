@@ -219,7 +219,7 @@ end
 function Gnar_Combo(target)
 	local POS = GetOrigin(target) + (GetOrigin(target) - myHero.pos):normalized()*Gnar_Vars.ET.range
 	if Mix:Mode() == "Combo" or Config.Key.CK:Value() then
-		if Config.C.Tiny.E:Value() and Ready(_Q) and GetCurrentHP(target) < (getdmg("Q", myHero, target)*3) and not UnderTurret(POS, enemyTurret) then Gnar_CastET(target) end
+		if Config.C.Tiny.E:Value() and GetCurrentHP(target) < (getdmg("Q", myHero, target)*3) and not UnderTurret(POS, enemyTurret) then Gnar_CastET(target) end
 		if Config.C.Mega.E:Value() and GetDistance(myHero, target) >= ((Gnar_Vars.EM.range/2) - 25) then Gnar_CastEM(target) if not UnderTurret(POS, enemyTurret) then Gnar_CastEM2(target) end end
 		if Config.C.Tiny.Q:Value() and Config.QT.QTMode:Value() == 1 then Gnar_CastQT(target) end
 		if Config.C.Tiny.Q:Value() and Config.QT.QTMode:Value() == 2 and WBuff[GetObjectName(target)] > 1 then Gnar_CastQT(target) end
