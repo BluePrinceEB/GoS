@@ -337,7 +337,7 @@ function Gnar_CastEM2(target)
 end
 
 function Gnar_CastR(count, target)
-	if Gnar_CountEnemiesNearUnit(myHero, 350) >= count and Ready(_R) and ValidTarget(target, 350) then if Config.R.RMode:Value() == 3 then Gnar_CastRToCollision() else DelayAction(function() Gnar_CastRToCollision() end, 0.350) end end
+	if Gnar_CountEnemiesNearUnit(myHero, 400) >= count and Ready(_R) and ValidTarget(target, 400) then if Config.R.RMode:Value() == 3 then Gnar_CastRToCollision() else DelayAction(function() Gnar_CastRToCollision() end, 0.350) end end
 end
 
 function Gnar_CastRAuto()
