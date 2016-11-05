@@ -378,6 +378,7 @@ function Gnar_CountEnemiesNearUnit(unit, range)
 end
 
 function Gnar_Activator(target)
+	if Mix:Mode() == "Combo" then
 	if Config.A.OI.YGB.C:Value() and GetItemSlot(myHero, 3142) > 0 and Ready(GetItemSlot(myHero,3142)) and EnemiesAround(myHero, 1000) > 0 then
 		CastSpell(GetItemSlot(myHero,3142))
 	end
@@ -389,6 +390,7 @@ function Gnar_Activator(target)
 	end
 	if Config.A.DI.RO.C:Value() and GetItemSlot(myHero, 3143) > 0 and Ready(GetItemSlot(myHero,3143)) and ValidTarget(target, 450) then
 		CastSpell(GetItemSlot(myHero,3143))
+	end
 	end
 
 	if Ignite and Ready(Ignite) then
