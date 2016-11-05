@@ -6,10 +6,11 @@ require('MixLib')
 require('ChallengerCommon')
 require('MapPositionGOS') 
 
-local Ver = "6.21.0.0"
+local LoLVer = "6.21.0.0"
+local ScrVer = "0.01"
 
 function AutoUpdate(data)
-    if tonumber(data) > tonumber(ver) then
+    if tonumber(data) > tonumber(ScrVer) then
         PrintChat("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#FFA500\"><b>[Gnar]</b></font><font color=\"#E8E8E8\"> New version found!</font> " .. data)
         PrintChat("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#FFA500\"><b>[Gnar]</b></font><font color=\"#E8E8E8\"> Downloading update, please wait...</font>")
         DownloadFileAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/Gnar.lua", SCRIPT_PATH .. "Gnar.lua", function() PrintChat("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#FFA500\"><b>[Gnar]</b></font><font color=\"#E8E8E8\"> Update Complete, please 2x F6!</font>") return end)  
@@ -50,7 +51,7 @@ function Gnar()
 	Callback.Add("RemoveBuff", function(u, b) Gnar_RemoveBuff(u, b) end)
 
 	print("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#FFA500\"><b>[Gnar]</b></font><font color=\"#E8E8E8\"> Successfully Loaded!</font>")
-	print("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#FFA500\"><b>[Gnar]</b></font><font color=\"#E8E8E8\"> Current Version: </font>"..Ver)
+	print("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#FFA500\"><b>[Gnar]</b></font><font color=\"#E8E8E8\"> Current Version: </font>"..LoLVer)
 	print("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#FFA500\"><b>[Gnar]</b></font><font color=\"#E8E8E8\"> Have Fun, </font>"..GetUser().."<font color=\"#E8E8E8\"> !</font>")
 end
 
