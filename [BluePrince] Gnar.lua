@@ -189,9 +189,6 @@ function Gnar_Draw()
 	    if Config.D.E:Value() and Ready(_E) then DrawCircle(GetOrigin(myHero),Gnar_Vars.ET.range,1,1, ARGB(40,220,220,220)) end
 	    if Config.D.R:Value() and Ready(_R) then DrawCircle(GetOrigin(myHero),Gnar_Vars.R.range, 1,1, ARGB(40,220,220,220)) end
 	end
-
-    --local POS = myHero.pos + (myHero.pos - GetMousePos()):normalized():perpendicular():perpendicular()*475
-    --DrawCircle(POS,50,1,1,GoS.White)
 end
 
 function Gnar_UpdateBuff(u, b)
