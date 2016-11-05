@@ -337,7 +337,7 @@ function Gnar_CastEM2(target)
 end
 
 function Gnar_CastR(count, target)
-	if Gnar_CountEnemiesNearUnit(myHero, 400) >= count and Ready(_R) and ValidTarget(target, 400) then if Gnar_CastRToCollision() end
+	if Gnar_CountEnemiesNearUnit(myHero, 400) >= count and Ready(_R) and ValidTarget(target, 400) then Gnar_CastRToCollision() end
 end
 
 function Gnar_CastRAuto()
