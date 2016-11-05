@@ -7,7 +7,7 @@ require('ChallengerCommon')
 require('MapPositionGOS') 
 
 local LoLVer = "6.21.0.0"
-local ScrVer = "0.1"
+local ScrVer = "1"
 
 function AutoUpdate(data)
     if tonumber(data) > tonumber(ScrVer) then
