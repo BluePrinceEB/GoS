@@ -174,7 +174,7 @@ function Gnar_Spells()
     QM = { delay = 0.250 , speed = 1200      , width = 80  , range = 1100 },
     WM = { delay = 0.500 , speed = math.huge , width = 80  , range = 550  },
     EM = { delay = 0     , speed = 2100      , width = 300 , range = 475  },
-    R  = { delay = 0.500 , speed = math.huge , width = 400 , range = 590  }
+    R  = { delay = 0.500 , speed = math.huge , width = 400 , range = 400  }
     }
 end
 
