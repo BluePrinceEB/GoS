@@ -8,6 +8,18 @@ require('MapPositionGOS')
 
 local Ver = "6.21.0.0"
 
+function AutoUpdate(data)
+    if tonumber(data) > tonumber(ver) then
+        PrintChat("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#FFA500\"><b>[Gnar]</b></font><font color=\"#E8E8E8\"> New version found!</font> " .. data)
+        PrintChat("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#FFA500\"><b>[Gnar]</b></font><font color=\"#E8E8E8\"> Downloading update, please wait...</font>")
+        DownloadFileAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/Gnar.lua", SCRIPT_PATH .. "Gnar.lua", function() PrintChat("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#FFA500\"><b>[Gnar]</b></font><font color=\"#E8E8E8\"> Update Complete, please 2x F6!</font>") return end)  
+    else
+        PrintChat("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#FFA500\"><b>[Gnar]</b></font><font color=\"#E8E8E8\"> No updates found!</font>")
+    end
+end
+
+GetWebResultAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/Gnar.version", AutoUpdate)
+
 local Skin = {["Gnar"] = {"Classic", "Dino", "Gentleman", "Snow Day", "El Leon"}}
 
 OnLoad(function()
