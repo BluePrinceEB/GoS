@@ -8,7 +8,7 @@ if GetObjectName(GetMyHero()) ~= "Chogath" then return end
 ║║─║╔╗║║║║║╚╗║╔╗║─║║─║╔╗║
 ║╚═╣║║║╚╝║╚═╝║║║║─║║─║║║║
 ╚══╩╝╚╩══╩═══╩╝╚╝─╚╝─╚╝╚╝ 
-LoL Patch : 6.20
+LoL Patch : 6.22
 Script Verison : 0.03
 By Shulepin
 _________________________
