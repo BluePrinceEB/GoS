@@ -172,7 +172,6 @@ local function Talon_UpdateBuff(unit, buff)
 	if not unit or not buff then return end
 
 	if unit.isMe and buff.Name:lower() == "talonrstealth" then
-		print("On")
 		Stealth = true
 	end
 end
@@ -181,7 +180,6 @@ local function Talon_RemoveBuff(unit, buff)
 	if not unit or not buff then return end
 
 	if unit.isMe and buff.Name:lower() == "talonrstealth" then
-		print("Off")
 		Stealth = false
 	end
 end
