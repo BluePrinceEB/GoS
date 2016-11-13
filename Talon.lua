@@ -243,7 +243,7 @@ local function Talon_Combo(target)
 		    if Config.C.Q:Value() then Talon_CastQ(target) end
 		    if Config.C.W:Value() then Talon_CastW(target) end
 		    if Config.C.R:Value() and Config.C.RMode:Value() == 1 and GetPercentHP(target) + GetDmgShield(target) < Config.C.RHP:Value() then Talon_CastR(target) end
-		    if Config.C.R:Value() and Config.C.RMode:Value() == 2 and GetCurrentHP(target) + GetDmgShield(target) < (CalcDmg(_Q, target) + CalcDmg(_W, target) + (CalcDmg(_R, target))) then Talon_CastR(target) end
+		    if Config.C.R:Value() and Config.C.RMode:Value() == 2 and GetCurrentHP(target) + GetDmgShield(target) < (CalcDmg(_Q, target) + CalcDmg(_W, target) + (CalcDmg(_R, target)*2)) then Talon_CastR(target) end
 		end
 	end
 end
