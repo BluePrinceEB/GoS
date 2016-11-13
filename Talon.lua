@@ -3,7 +3,7 @@ if myHero.charName ~= "Talon" then return end
 local LoLVer = "6.22.0.0"
 local ScrVer = 1
 
---[[local function Talon_Update(data)
+local function Talon_Update(data)
     if tonumber(data) > ScrVer then
         PrintChat("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#8B0000\"><b>[Talon]</b></font><font color=\"#E8E8E8\"> New version found!</font> " .. data)
         PrintChat("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#8B0000\"><b>[Talon]</b></font><font color=\"#E8E8E8\"> Downloading update, please wait...</font>")
@@ -13,7 +13,7 @@ local ScrVer = 1
     end
 end
 
-GetWebResultAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/Talon.version", Talon_Update)]]
+GetWebResultAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/Talon.version", Talon_Update)
 
 local Stealth    = false
 local Skin_Table = { ["Talon"] = {"Classic", "Renegade", "Crimson Elite", "Dragonblade", "SSW"} }
