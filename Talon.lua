@@ -15,6 +15,9 @@ end
 
 GetWebResultAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/Talon.version", Talon_Update)
 
+local summonerNameOne = myHero:GetSpellData(SUMMONER_1).name 
+local summonerNameTwo = myHero:GetSpellData(SUMMONER_2).name
+local Ignite = (summonerNameOne:lower():find("summonerdot") and SUMMONER_1 or (summonerNameTwo:lower():find("summonerdot") and SUMMONER_2 or nil))
 local Stealth    = false
 local Skin_Table = { ["Talon"] = {"Classic", "Renegade", "Crimson Elite", "Dragonblade", "SSW"} }
 local Config     = MenuConfig("Talon", "Talon")
@@ -45,6 +48,7 @@ Config.CL:Slider("Mana", "Min. Mana(%) For Clear", 50, 0, 100, 1)
 Config:SubMenu("K", "Kill Steal")
 Config.K:Boolean("Q", "Use Q", true)
 Config.K:Boolean("W", "Use W", true)
+Config.K:Boolean("I", "Use Ignite", true)
 
 Config:SubMenu("D", "Drawings")
 Config.D:Boolean("HP", "Draw Damage Bar", true)
@@ -277,6 +281,15 @@ end
 local function Talon_KillSteal(target)
 	if Config.K.Q:Value() and GetCurrentHP(target) + GetDmgShield(target) < CalcDmg(_Q, target) then Talon_CastQ(target) end
 	if Config.K.W:Value() and GetCurrentHP(target) + GetDmgShield(target) < CalcDmg(_W, target) then Talon_CastW(target) end
+	
+	if Ignite and Ready(Ignite) and Config.K.I:Value() then
+		for _, unit in pairs(GetEnemyHeroes()) do
+			local IgniteDmg = 70+20*GetLevel(myHero)
+			if ValidTarget(unit, 660) and GetCurrentHP(unit) + GetDmgShield(unit) <= IgniteDmg then
+				CastTargetSpell(unit, Ignite)
+			end
+		end
+	end
 end
 
 local function Talon_Item()
