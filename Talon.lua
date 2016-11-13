@@ -305,3 +305,7 @@ OnLoad(function()
 	OnUpdateBuff(Talon_UpdateBuff)
 	OnRemoveBuff(Talon_RemoveBuff)
 end)
+
+print("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#8B0000\"><b>[Talon]</b></font><font color=\"#E8E8E8\"> Successfully Loaded!</font>")
+print("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#8B0000\"><b>[Talon]</b></font><font color=\"#E8E8E8\"> Current Version: </font>"..LoLVer)
+print("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#8B0000\"><b>[Talon]</b></font><font color=\"#E8E8E8\"> Have Fun, </font>"..GetUser().."<font color=\"#E8E8E8\"> !</font>")
