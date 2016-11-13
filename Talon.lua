@@ -17,10 +17,10 @@ GetWebResultAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/Tal
 
 local summonerNameOne = myHero:GetSpellData(SUMMONER_1).name 
 local summonerNameTwo = myHero:GetSpellData(SUMMONER_2).name
-local Ignite = (summonerNameOne:lower():find("summonerdot") and SUMMONER_1 or (summonerNameTwo:lower():find("summonerdot") and SUMMONER_2 or nil))
-local Stealth    = false
-local Skin_Table = { ["Talon"] = {"Classic", "Renegade", "Crimson Elite", "Dragonblade", "SSW"} }
-local Config     = MenuConfig("Talon", "Talon")
+local Ignite          = (summonerNameOne:lower():find("summonerdot") and SUMMONER_1 or (summonerNameTwo:lower():find("summonerdot") and SUMMONER_2 or nil))
+local Stealth         = false
+local Skin_Table      = { ["Talon"] = {"Classic", "Renegade", "Crimson Elite", "Dragonblade", "SSW"} }
+local Config          = MenuConfig("Talon", "Talon")
 
 Config:SubMenu("C", "Combo")
 Config.C:Boolean("I", "Use Items", true)
@@ -194,8 +194,8 @@ local function Talon_Draw()
 	if Config.D.E:Value() and Ready(_E) then DrawCircle(GetOrigin(myHero),E.range,1,1,ARGB(80,220,220,220)) end
 	if Config.D.R:Value() and Ready(_R) then DrawCircle(GetOrigin(myHero),R.range,1,1,ARGB(80,220,220,220)) end
 
-	for i, HPbarEnemyChamp in pairs(GetEnemyHeroes()) do
-    if not HPbarEnemyChamp.dead and HPbarEnemyChamp.visible and Config.D.HP:Value() then
+      for i, HPbarEnemyChamp in pairs(GetEnemyHeroes()) do
+      if not HPbarEnemyChamp.dead and HPbarEnemyChamp.visible and Config.D.HP:Value() then
       local dmg =  GetBonusDmg(myHero)+GetBaseDamage(myHero)
       if Ready(_Q) and not HPbarEnemyChamp.dead then
         dmg = dmg + CalcDmg(_Q, HPbarEnemyChamp)
@@ -234,13 +234,13 @@ local function Talon_Combo(target)
 	if Mode() == "Combo" then
 		if Config.C.S:Value() then
 			if Stealth == false then
-				if Config.C.Q:Value() then Talon_CastQ(target) end
+			if Config.C.Q:Value() then Talon_CastQ(target) end
 		        if Config.C.W:Value() then Talon_CastW(target) end
 		        if Config.C.R:Value() and Config.C.RMode:Value() == 1 and GetPercentHP(target) + GetDmgShield(target) < Config.C.RHP:Value() then Talon_CastR(target) end
 		        if Config.C.R:Value() and Config.C.RMode:Value() == 2 and GetCurrentHP(target) + GetDmgShield(target) < (CalcDmg(_Q, target) + CalcDmg(_W, target) + CalcDmg(_R, target)*3) then Talon_CastR(target) end
 			end
 		else
-			if Config.C.Q:Value() then Talon_CastQ(target) end
+		    if Config.C.Q:Value() then Talon_CastQ(target) end
 		    if Config.C.W:Value() then Talon_CastW(target) end
 		    if Config.C.R:Value() and Config.C.RMode:Value() == 1 and GetPercentHP(target) + GetDmgShield(target) < Config.C.RHP:Value() then Talon_CastR(target) end
 		    if Config.C.R:Value() and Config.C.RMode:Value() == 2 and GetCurrentHP(target) + GetDmgShield(target) < (CalcDmg(_Q, target) + CalcDmg(_W, target) + (CalcDmg(_R, target))) then Talon_CastR(target) end
@@ -261,7 +261,7 @@ end
 local function Talon_Harass(target)
 	if Mode() == "Harass" then
 		if GetPercentMP(myHero) >= Config.H.Mana:Value() then
-			if Config.H.Q:Value() then Talon_CastQ(target) end
+		    if Config.H.Q:Value() then Talon_CastQ(target) end
 		    if Config.H.W:Value() then Talon_CastW(target) end
 		end
 	end
