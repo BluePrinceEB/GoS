@@ -234,14 +234,14 @@ local function Talon_Combo(target)
 	if Mode() == "Combo" then
 		if Config.C.S:Value() then
 			if Stealth == false then
-			if Config.C.Q:Value() then Talon_CastQ(target) end
-		        if Config.C.W:Value() then Talon_CastW(target) end
+			if Config.C.W:Value() then Talon_CastW(target) end
+		        if Config.C.Q:Value() then Talon_CastQ(target) end
 		        if Config.C.R:Value() and Config.C.RMode:Value() == 1 and GetPercentHP(target) + GetDmgShield(target) < Config.C.RHP:Value() then Talon_CastR(target) end
 		        if Config.C.R:Value() and Config.C.RMode:Value() == 2 and GetCurrentHP(target) + GetDmgShield(target) < (CalcDmg(_Q, target) + CalcDmg(_W, target) + CalcDmg(_R, target)*2) then Talon_CastR(target) end
 			end
 		else
-		    if Config.C.Q:Value() then Talon_CastQ(target) end
 		    if Config.C.W:Value() then Talon_CastW(target) end
+		    if Config.C.Q:Value() then Talon_CastQ(target) end
 		    if Config.C.R:Value() and Config.C.RMode:Value() == 1 and GetPercentHP(target) + GetDmgShield(target) < Config.C.RHP:Value() then Talon_CastR(target) end
 		    if Config.C.R:Value() and Config.C.RMode:Value() == 2 and GetCurrentHP(target) + GetDmgShield(target) < (CalcDmg(_Q, target) + CalcDmg(_W, target) + (CalcDmg(_R, target)*2)) then Talon_CastR(target) end
 		end
@@ -261,8 +261,8 @@ end
 local function Talon_Harass(target)
 	if Mode() == "Harass" then
 		if GetPercentMP(myHero) >= Config.H.Mana:Value() then
-		    if Config.H.Q:Value() then Talon_CastQ(target) end
 		    if Config.H.W:Value() then Talon_CastW(target) end
+		    if Config.H.Q:Value() then Talon_CastQ(target) end
 		end
 	end
 end
