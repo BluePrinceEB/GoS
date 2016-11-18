@@ -1,7 +1,7 @@
 if myHero.charName ~= "Rengar" then return end
 
 local LoLVer = "6.22.0.0"
-local ScrVer = 1
+local ScrVer = 3
 
 local function Rengar_Update(data)
     if tonumber(data) > ScrVer then
@@ -389,7 +389,7 @@ OnLoad(function()
 	OnRemoveBuff(Rengar_RemoveBuff)
 	OnProcessSpellComplete(Rengar_OnProcessSpellComplete)
 	
-    print("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#8B0000\"><b>[Rengar]</b></font><font color=\"#E8E8E8\"> Successfully Loaded!</font>")
+	print("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#8B0000\"><b>[Rengar]</b></font><font color=\"#E8E8E8\"> Successfully Loaded!</font>")
     print("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#8B0000\"><b>[Rengar]</b></font><font color=\"#E8E8E8\"> Current Version: </font>"..LoLVer)
     print("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#8B0000\"><b>[Rengar]</b></font><font color=\"#E8E8E8\"> Have Fun, </font>"..GetUser().."<font color=\"#E8E8E8\"> !</font>")
 end)
