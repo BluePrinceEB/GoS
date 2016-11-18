@@ -375,6 +375,7 @@ local function Rengar_Tick()
 		for _, target in pairs(minionManager.objects) do Rengar_LastHit(target) Rengar_Clear(target) end
 		Rengar_Dash(target)
 		Rengar_Switch()
+		Rengar_Items()
 	end
 end
 
