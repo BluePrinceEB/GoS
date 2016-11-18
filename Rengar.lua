@@ -1,7 +1,7 @@
 if myHero.charName ~= "Rengar" then return end
 
 local LoLVer = "6.22.0.0"
-local ScrVer = 1
+local ScrVer = 2
 
 local function Rengar_Update(data)
     if tonumber(data) > ScrVer then
@@ -281,7 +281,7 @@ local function Rengar_CastQ(target)
 	if Config.P.P:Value() == 2 and GetCurrentMana(myHero) == 4 then return end
 	if Ready(_Q) and ValidTarget(target, Q.range) then
 		local Prediction = GetPredictionForPlayer(myHero,target,GetMoveSpeed(target),Q.speed,Q.delay,Q.range,Q.width,false,true)
-		if Prediction.HitChance == 1 then CastSkillShot(_Q, Prediction.PredPos) end
+		if Prediction.HitChance == 1 then CastSkillShot(_Q, Prediction.PredPos) IOW:ResetAA() end
 	end
 end
 
@@ -301,9 +301,19 @@ local function Rengar_CastE(target)
 end
 
 local function Rengar_Items()
-	if GetItemSlot(myHero, 3142) > 0 and Ready(GetItemSlot(myHero,3142)) and EnemiesAround(myHero, 1000) > 0 and Config.C.I:Value() then
+	if Config.C.I:Value() then
+	if GetItemSlot(myHero, 3142) > 0 and Ready(GetItemSlot(myHero,3142)) and EnemiesAround(myHero, 1000) > 0 then
 		CastSpell(GetItemSlot(myHero,3142))
 	end
+	if GetItemSlot(myHero, 3077) > 0 and Ready(GetItemSlot(myHero,3077)) then
+		CastSpell(GetItemSlot(myHero,3077))
+	end
+	if GetItemSlot(myHero, 3074) > 0 and Ready(GetItemSlot(myHero,3074)) then
+		CastSpell(GetItemSlot(myHero,3074))
+	end
+	if GetItemSlot(myHero, 3748) > 0 and Ready(GetItemSlot(myHero,3748)) then
+		CastSpell(GetItemSlot(myHero,3748))
+	end end
 end
 
 local function Rengar_Switch()
@@ -320,8 +330,9 @@ local function Rengar_Switch()
 end
 
 local function Rengar_Combo(target)
-	if UltActive == true then return end
+	if UltActive == true or Dash == true then return end
 	if Mode() == "Combo" then
+		if ValidTarget(target, 200) then Rengar_Items() end
 		if Config.C.Q:Value() then Rengar_CastQ(target) end
 		if Config.C.W:Value() then Rengar_CastW(target) end
 		if Config.C.E:Value() then Rengar_CastE(target) end
@@ -360,9 +371,10 @@ end
 local function Rengar_Dash(target)
 	if UltActive == true then return end
 	if Mode() == "Combo" and Dash == true then
-		if Config.C.Q:Value() then Rengar_CastQ(target) end
-		if Config.C.W:Value() then Rengar_CastW(target) end
 		if Config.C.E:Value() then Rengar_CastE(target) end
+		if ValidTarget(target, 200) then Rengar_Items() end
+		if Config.C.W:Value() then Rengar_CastW(target) end
+		if Config.C.Q:Value() then Rengar_CastQ(target) end
 	end
 end
 
@@ -375,7 +387,6 @@ local function Rengar_Tick()
 		for _, target in pairs(minionManager.objects) do Rengar_LastHit(target) Rengar_Clear(target) end
 		Rengar_Dash(target)
 		Rengar_Switch()
-		Rengar_Items()
 	end
 end
 
@@ -385,9 +396,9 @@ OnLoad(function()
 	OnDraw(Rengar_Draw)
 	OnUpdateBuff(Rengar_UpdateBuff)
 	OnRemoveBuff(Rengar_RemoveBuff)
-	OnProcessSpellComplete(Rengar_OnProcessSpellComplete)
+	--OnProcessSpellComplete(Rengar_OnProcessSpellComplete)
 	
-	print("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#8B0000\"><b>[Rengar]</b></font><font color=\"#E8E8E8\"> Successfully Loaded!</font>")
-        print("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#8B0000\"><b>[Rengar]</b></font><font color=\"#E8E8E8\"> Current Version: </font>"..LoLVer)
-        print("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#8B0000\"><b>[Rengar]</b></font><font color=\"#E8E8E8\"> Have Fun, </font>"..GetUser().."<font color=\"#E8E8E8\"> !</font>")
+    print("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#8B0000\"><b>[Rengar]</b></font><font color=\"#E8E8E8\"> Successfully Loaded!</font>")
+    print("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#8B0000\"><b>[Rengar]</b></font><font color=\"#E8E8E8\"> Current Version: </font>"..LoLVer)
+    print("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#8B0000\"><b>[Rengar]</b></font><font color=\"#E8E8E8\"> Have Fun, </font>"..GetUser().."<font color=\"#E8E8E8\"> !</font>")
 end)
