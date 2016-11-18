@@ -1,7 +1,7 @@
 if myHero.charName ~= "Rengar" then return end
 
 local LoLVer = "6.22.0.0"
-local ScrVer = 2
+local ScrVer = 1
 
 local function Rengar_Update(data)
     if tonumber(data) > ScrVer then
@@ -232,12 +232,6 @@ local function Rengar_OnProcessSpellComplete(unit, spell)
 	if not unit or not spell then return end
 
 	if unit.isMe and spell.name:lower():find("attack") and (Mode() == "Combo" or Mode() == "LaneClear") and Config.C.I:Value() then
-		if GetItemSlot(myHero, 3077) > 0 and Ready(GetItemSlot(myHero,3077)) then
-			CastSpell(GetItemSlot(myHero,3077))
-		end
-		if GetItemSlot(myHero, 3074) > 0 and Ready(GetItemSlot(myHero,3074)) then
-			CastSpell(GetItemSlot(myHero,3074))
-		end
 		if GetItemSlot(myHero, 3748) > 0 and Ready(GetItemSlot(myHero,3748)) then
 			CastSpell(GetItemSlot(myHero,3748))
 		end
@@ -310,9 +304,6 @@ local function Rengar_Items()
 	end
 	if GetItemSlot(myHero, 3074) > 0 and Ready(GetItemSlot(myHero,3074)) then
 		CastSpell(GetItemSlot(myHero,3074))
-	end
-	if GetItemSlot(myHero, 3748) > 0 and Ready(GetItemSlot(myHero,3748)) then
-		CastSpell(GetItemSlot(myHero,3748))
 	end end
 end
 
@@ -396,7 +387,7 @@ OnLoad(function()
 	OnDraw(Rengar_Draw)
 	OnUpdateBuff(Rengar_UpdateBuff)
 	OnRemoveBuff(Rengar_RemoveBuff)
-	--OnProcessSpellComplete(Rengar_OnProcessSpellComplete)
+	OnProcessSpellComplete(Rengar_OnProcessSpellComplete)
 	
     print("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#8B0000\"><b>[Rengar]</b></font><font color=\"#E8E8E8\"> Successfully Loaded!</font>")
     print("<font color=\"#1E90FF\"><b>[Shulepin]</b></font><font color=\"#8B0000\"><b>[Rengar]</b></font><font color=\"#E8E8E8\"> Current Version: </font>"..LoLVer)
