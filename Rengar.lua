@@ -250,7 +250,7 @@ local function Rengar_Draw()
 	if Config.D.W:Value() and Ready(_W) then DrawCircle(GetOrigin(myHero),W.range,1,255,ARGB(80,220,220,220)) end
 	if Config.D.E:Value() and Ready(_E) then DrawCircle(GetOrigin(myHero),E.range,1,255,ARGB(80,220,220,220)) end
 
-      if not myHero.dead then Config.P.P:Value() == 1 then DrawText("Prioritize: Q",22,GetHPBarPos(myHero).x,GetHPBarPos(myHero).y+180,GoS.White) else DrawText("Prioritize: E",22,GetHPBarPos(myHero).x,GetHPBarPos(myHero).y+180,GoS.White) end end
+      if not myHero.dead then if Config.P.P:Value() == 1 then DrawText("Prioritize: Q",22,GetHPBarPos(myHero).x,GetHPBarPos(myHero).y+180,GoS.White) else DrawText("Prioritize: E",22,GetHPBarPos(myHero).x,GetHPBarPos(myHero).y+180,GoS.White) end end
 
       for i, Enemy in pairs(GetEnemyHeroes()) do
       if not Enemy.dead and Enemy.visible and Config.D.HP:Value() then
