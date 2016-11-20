@@ -91,7 +91,7 @@ local SwainW = { delay = 1.100, speed = math.huge, range = 900, radius = 180 }
 local item = {3157}
 
 --Locals
-local LoL = "6.19"
+local LoL = "6.22"
 local RangeQ = 700
 local RangeW = 900
 local RangeE = 625
