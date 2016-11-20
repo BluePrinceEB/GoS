@@ -112,7 +112,7 @@ ChoMenu.m.s:Boolean("sb", "Use Skin Changer")
 ChoMenu.m.s:Slider("cs", "Choose Skin", 0, 0, 10, 1)
 
 --Locals
-local LoL = "6.19"
+local LoL = "6.22"
 local _skin = 0
 local RangeQ = 950
 local RangeW = 650
