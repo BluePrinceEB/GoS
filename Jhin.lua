@@ -1,7 +1,8 @@
 if myHero.charName ~= "Jhin" then return end
 
-local LoLVer = "6.23.0.0"
-local ScrVer = 1
+
+local LoLVer = "6.23.0.1"
+local ScrVer = 2
 
 local function Jhin_Update(data)
     if tonumber(data) > ScrVer then
@@ -15,7 +16,8 @@ end
 
 GetWebResultAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/Jhin.version", Jhin_Update)
 
-require("OpenPredict")
+require("GPrediction")
+local GPred = _G.gPred
 
 local Config     = MenuConfig("Jhin", "Jhin | Artisan Killer")
 local sp         = {[0]="Q",[1]="W",[2]="E",[3]="R"}
@@ -28,9 +30,9 @@ local Skin_Table = {["Jhin"] = {"Classic", "High Noon"}}
 local LvL_Table  = { [1] = {_Q,_E,_W,_Q,_Q,_R,_Q,_E,_Q,_E,_R,_E,_E,_W,_W,_R,_W,_W}, [2] = {_Q,_W,_E,_Q,_Q,_R,_Q,_W,_Q,_W,_R,_W,_W,_E,_E,_R,_E,_E} }
 
 local Q = { range = 600 }
-local W = { delay = .75, speed = 5000, width = 40 , range = 2500 }
-local E = { delay = .85, speed = 1600, width = 300, range = 750  }
-local R = { delay = .2,  speed = 4500, width = 80 , range = 3500 }
+local W = { range = 2550, radius = 20 , speed = 5000, delay = 0.75, type = "line", col = {"minion","champion"}}
+local E = { range = 750 , radius = 150 , speed = 1600, delay = 0.85, type = "circular", col = {"minion","champion"}}
+local R = { range = 3500 , radius = 40 , speed = 4500, delay = 0.2, type = "line", col = {"minion","champion"}}
 
 Config:SubMenu("C", "Combat Settings")
 Config.C:Boolean("Q", "Use Q", true)
@@ -247,18 +249,27 @@ end
 
 local function Jhin_CastW(target, range)
 	if myHero:CanUseSpell(_W) == READY and ValidTarget(target, range) and GotBuff(target, "jhinespotteddebuff") > 0 then
-		local Prediction = GetPrediction(target, W)
-		if Prediction.hitChance >= Jhin_HitChance(Config.E.H, 1) then
-			CastSkillShot(_W, Prediction.castPos)
+		local P = GPred:GetPrediction(target,myHero,W,false,false)
+		if P and P.HitChance >= 0 then
+			CastSkillShot(_W, P.CastPosition)
+		end
+	end
+end
+
+local function Jhin_CastW2(target, range)
+	if myHero:CanUseSpell(_W) == READY and ValidTarget(target, range) then
+		local P = GPred:GetPrediction(target,myHero,W,false,false)
+		if P and P.HitChance >= 0 then
+			CastSkillShot(_W, P.CastPosition)
 		end
 	end
 end
 
 local function Jhin_CastE(target, range)
 	if myHero:CanUseSpell(_E) == READY and ValidTarget(target, range) then
-		local Prediction = GetPrediction(target, E)
-		if Prediction.hitChance >= Jhin_HitChance(Config.E.H, 2) then
-			CastSkillShot(_E, Prediction.castPos)
+		local P = GPred:GetPrediction(target,myHero,E,false,false)
+		if P and P.HitChance >= 0 then
+			CastSkillShot(_E, P.CastPosition)
 		end
 	end
 end
@@ -271,9 +282,9 @@ end
 
 local function Jhin_CastRMis(target, range)
 	if myHero:CanUseSpell(_R) == READY and myHero:GetSpellData(_R).name == "JhinRShot" and ValidTarget(target, range) then
-		local Prediction = GetPrediction(target, R)
-		if Prediction.hitChance >= Jhin_HitChance(Config.E.H, 3) then
-			CastSkillShot(_R, Prediction.castPos)
+		local P = GPred:GetPrediction(target,myHero,R,false,false)
+		if P and P.HitChance >= 0 then
+			CastSkillShot(_R, P.CastPosition)
 		end
 	end
 end
@@ -284,7 +295,7 @@ local function Jhin_PSC(unit, spell)
 	if unit.isMe and spell.name:lower():find("attack") and (Mode() == "Combo" or Config.C.CKey:Value()) then
 		local target = GetCurrentTarget()
 		if Config.C.AS.QMode:Value() == 2 and Config.C.Q:Value() then Jhin_CastQ(target, Q.range) end
-		Jhin_CastE(target, E.range)
+		if Config.C.E:Value() then Jhin_CastE(target, E.range) end
 	end
 end
 
@@ -350,7 +361,7 @@ end
 local function Jhin_KillSteal()
 	for _, target in pairs(GetEnemyHeroes()) do
 		if GetCurrentHP(target) + GetDmgShield(target) < CalcDamage(myHero, target, Jhin_CalcDmg(_Q, target) ,0) and Config.E.K.Q:Value() then Jhin_CastQ(target, Q.range) end
-		if GetCurrentHP(target) + GetDmgShield(target) < CalcDamage(myHero, target, Jhin_CalcDmg(_W, target) ,0) and Config.E.K.W:Value() then Jhin_CastW(target, W.range) end
+		if GetCurrentHP(target) + GetDmgShield(target) < CalcDamage(myHero, target, Jhin_CalcDmg(_W, target) ,0) and Config.E.K.W:Value() then Jhin_CastW2(target, W.range) end
 	end
 end
 
