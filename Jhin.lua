@@ -1,8 +1,8 @@
 if myHero.charName ~= "Jhin" then return end
 
 
-local LoLVer = "6.23.0.1"
-local ScrVer = 2
+local LoLVer = "6.23.0.2"
+local ScrVer = 3
 
 local function Jhin_Update(data)
     if tonumber(data) > ScrVer then
