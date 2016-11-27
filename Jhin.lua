@@ -250,7 +250,7 @@ end
 local function Jhin_CastW(target, range)
 	if myHero:CanUseSpell(_W) == READY and ValidTarget(target, range) and GotBuff(target, "jhinespotteddebuff") > 0 then
 		local P = GPred:GetPrediction(target,myHero,W,false,false)
-		if P and P.HitChance >= 0 then
+		if P and P.HitChance >= Jhin_HitChance(Config.E.H, 1) then
 			CastSkillShot(_W, P.CastPosition)
 		end
 	end
@@ -259,7 +259,7 @@ end
 local function Jhin_CastW2(target, range)
 	if myHero:CanUseSpell(_W) == READY and ValidTarget(target, range) then
 		local P = GPred:GetPrediction(target,myHero,W,false,false)
-		if P and P.HitChance >= 0 then
+		if P and P.HitChance >= Jhin_HitChance(Config.E.H, 1) then
 			CastSkillShot(_W, P.CastPosition)
 		end
 	end
@@ -268,7 +268,7 @@ end
 local function Jhin_CastE(target, range)
 	if myHero:CanUseSpell(_E) == READY and ValidTarget(target, range) then
 		local P = GPred:GetPrediction(target,myHero,E,false,false)
-		if P and P.HitChance >= 0 then
+		if P and P.HitChance >= Jhin_HitChance(Config.E.H, 2) then
 			CastSkillShot(_E, P.CastPosition)
 		end
 	end
@@ -283,7 +283,7 @@ end
 local function Jhin_CastRMis(target, range)
 	if myHero:CanUseSpell(_R) == READY and myHero:GetSpellData(_R).name == "JhinRShot" and ValidTarget(target, range) then
 		local P = GPred:GetPrediction(target,myHero,R,false,false)
-		if P and P.HitChance >= 0 then
+		if P and P.HitChance >= Jhin_HitChance(Config.E.H, 3) then
 			CastSkillShot(_R, P.CastPosition)
 		end
 	end
