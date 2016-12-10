@@ -1,7 +1,7 @@
 if myHero.charName ~= "Rengar" then return end
 
-local LoLVer = "6.23.0.0"
-local ScrVer = 4
+local LoLVer = "6.24.0.0"
+local ScrVer = 5
 
 local function Rengar_Update(data)
     if tonumber(data) > ScrVer then
