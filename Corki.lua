@@ -37,7 +37,7 @@ function Corki:__init()
 end
 
 function Corki:InitMenu()
-	Config = MenuConfig("Corki", "Corki")
+	Config = MenuConfig("Corki", "Corki | The Daring Bombardier")
 	Config:SubMenu("C", "Combat Settings")
     Config.C:Boolean("Q", "Use Q", true)
     Config.C:Boolean("W", "Use W")
