@@ -1,7 +1,7 @@
 if myHero.charName ~= "Talon" then return end
 
-local LoLVer = "6.23.0.0"
-local ScrVer = 2
+local LoLVer = "6.24.0.0"
+local ScrVer = 3
 
 local function Talon_Update(data)
     if tonumber(data) > ScrVer then
