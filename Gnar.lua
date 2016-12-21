@@ -6,8 +6,8 @@ require('MixLib')
 require('ChallengerCommon')
 require('MapPositionGOS') 
 
-local LoLVer = "6.23.0.0"
-local ScrVer = 3
+local LoLVer = "6.24.0.0"
+local ScrVer = 4
 
 local function Gnar_Update(data)
     if tonumber(data) > ScrVer then
