@@ -105,7 +105,7 @@ function _Prediction:CurrentPrediction(Menu)
 	elseif Menu.ChoosePrediction:Value() == 2 then
 		if self.GPP_D then Menu:Info("GPP", "Current Prediction: GPrediction") end
 	elseif Menu.ChoosePrediction:Value() == 3 then
-		if self.GMP_D then Menu:Info("GMP", "Current Prediction: GameSteRon Pred") end
+		if self.GMP_D then Menu:Info("GMP", "Current Prediction: GamSteRon Pred") end
 	elseif Menu.ChoosePrediction:Value() == 4 then
 		if self.CLP_D then Menu:Info("CLP", "Current Prediction: Cloud Pred") end
 	elseif Menu.ChoosePrediction:Value() == 5 then
