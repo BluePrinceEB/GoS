@@ -1,7 +1,6 @@
 class "_Prediction"
 
 function _Prediction:__init(Menu)
-	self.PredictionTable = { "Open Prediction", "GPrediction", "Gamsteron Prediction" }
 	self.GPP_D, self.GMP_D, self.OP_D, self.CLP_D = false, false, false, false
 	self.GPP_P, self.GMP_P, self.OP_P, self.CLP_P = false, false, false, false
 	self:DownloadLib()
