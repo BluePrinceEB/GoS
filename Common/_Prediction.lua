@@ -34,7 +34,7 @@ end
 function _Prediction:DownloadOPred()
 	if not FileExist(COMMON_PATH.."\\OpenPredict.lua") then
 		self.OP_D = false
-	    MSG("[OpenPrediction] Downloading required lib, please wait...")
+	    self:MSG("[OpenPrediction] Downloading required lib, please wait...")
 	    DownloadFileAsync("https://raw.githubusercontent.com/Jo7j/GoS/master/OpenPredict/OpenPredict.lua", COMMON_PATH .. "OpenPredict.lua", function() self:MSG("[OpenPrediction] Download Completed") self.GPP_P = true return end)
 	    return
     else
