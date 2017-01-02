@@ -19,8 +19,7 @@ function _Prediction:PredictionMenu(Menu)
 end
 
 function _Prediction:HitChanceMenu(Menu, Spell)
-	Menu:SubMenu("HitChance", "HitChance Settings")
-	Menu.HitChance:DropDown("H".._____SlotToString[Spell], "HitChance ".."[".._____SlotToString[Spell].."]", 2, {"Low", "Medium", "High"})
+	Menu:DropDown("H".._____SlotToString[Spell], "HitChance ".."[".._____SlotToString[Spell].."]", 2, {"Low", "Medium", "High"})
 end
 
 function _Prediction:DownloadLib()
