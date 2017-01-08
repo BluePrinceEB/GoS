@@ -2,12 +2,18 @@ if myHero.charName ~= "Gnar" then return end
 
 require('DamageLib')
 require('OpenPredict')
-require('MixLib')
 require('ChallengerCommon')
 require('MapPositionGOS') 
+if FileExist(COMMON_PATH.."\\MixLib.lua") then
+	require('MixLib')
+else
+    PrintChat("[Gnar] Downloading required lib, please wait...")
+	DownloadFileAsync("https://raw.githubusercontent.com/VTNEETS/GoS/master/MixLib.lua", COMMON_PATH .. "MixLib.lua", function() PrintChat("[Gnar] Download Completed x2 F6") return end)
+	return
+end
 
 local LoLVer = "6.24.0.0"
-local ScrVer = 4
+local ScrVer = 5
 
 local function Gnar_Update(data)
     if tonumber(data) > ScrVer then
