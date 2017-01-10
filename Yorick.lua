@@ -35,7 +35,7 @@ local SheenTick = 0
 
 local Q = { range = 225                                                              }
 local W = { range = 600 , delay = .75, radius = 75 , speed = 1200, type = "circular" }
-local E = { range = 1000, delay = .5 , radius = 100, speed = 1200, type = "line" }
+local E = { range = 1000, delay = .5 , radius = 100, speed = 1200, type = "line"     }
 local R = { range = 600 , delay = .5 , radius = 100, speed = 1800, type = "circular" }
 
 local Config = MenuConfig("Yorick", "Yorick")
