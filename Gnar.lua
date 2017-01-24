@@ -12,8 +12,8 @@ else
 	return
 end
 
-local LoLVer = "6.24.0.0"
-local ScrVer = 5
+local LoLVer = "7.1"
+local ScrVer = 6
 
 local function Gnar_Update(data)
     if tonumber(data) > ScrVer then
