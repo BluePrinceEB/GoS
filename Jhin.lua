@@ -1,8 +1,8 @@
 if myHero.charName ~= "Jhin" then return end
 
 
-local LoLVer = "7.1"
-local ScrVer = 5
+local LoLVer = "7.4"
+local ScrVer = 6
 
 local function Jhin_Update(data)
     if tonumber(data) > ScrVer then
@@ -16,7 +16,7 @@ end
 
 GetWebResultAsync("https://raw.githubusercontent.com/BluePrinceEB/GoS/master/Jhin.version", Jhin_Update)
 
-require("GPrediction")
+require("GoSWalk")
 local GPred = _G.gPred
 
 local Config     = MenuConfig("Jhin", "Jhin | Artisan Killer")
