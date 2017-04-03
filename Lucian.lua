@@ -169,8 +169,7 @@ end
 
 local Tick = function()         
         if myHero.dead then return end         
-        local target = GetCurrentTarget() 
-        if target == nil or target.dead or not target.visible then return end        
+        local target = GetCurrentTarget()         
         if Menu.AutoHarass.Use:Value() and GetPercentMP(myHero) >= Menu.AutoHarass.Mana:Value() and target.visible and Menu.AutoHarass.WhiteList["S"..target.charName]:Value() then 
                 	if Menu.AutoHarass.Q.Use2:Value() then CastQ2(target) end         
         end         
