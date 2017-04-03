@@ -219,8 +219,7 @@ end
 
 local Draw = function()         
         if myHero.dead or Menu.Draw.Disable:Value() then return end         
-        local target = GetCurrentTarget() 
-        if target == nil or target.dead or not target.visible then return end	
+        local target = GetCurrentTarget() 	
         if not inc then inc = 0 end 	
         inc = inc + 0.002 	
         if inc > 6.28318 then inc = 0 end 	
