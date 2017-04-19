@@ -7,7 +7,7 @@ local Alert = function(text, name)
         print("<b><font color=\"#ffb10a\">"..name.."- <font color=\"#ffffff\"><b>"..text) 
 end
 
-local LoLVer, ScrVer = "7.7", 3 
+local LoLVer, ScrVer = "7.8", 3 
 local AutoUpdate = function(data)     
         if tonumber(data) > ScrVer then         
 	        Alert("New version found! -" .. data)         
